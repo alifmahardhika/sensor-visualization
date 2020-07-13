@@ -12,6 +12,8 @@ urlpatterns = [
     # Avoid using your .html in your resources.
     # Or create a separate django app.
     re_path(r'^.*\.html', views.pages, name='pages'),
+    path('temperature.json', views.temperature_json, name='temp-json'),
+
 
     # The home page
     path('', views.index, name='home'),

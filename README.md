@@ -1,4 +1,4 @@
-# [Django Dashboard DattaAble](https://appseed.us/admin-dashboards/django-dashboard-dattaable)
+# [Django Dashboard DattaAble](/#)
 
 > **Open-Source Admin Dashboard** coded in **Django Framework** by **AppSeed** [Web App Generator](https://appseed.us/app-generator) - features:
 
@@ -9,12 +9,12 @@
 - Session-Based Authentication, Forms validation
 - Deployment scripts: Docker, Gunicorn / Nginx
 - **MIT License**
-- Free support via **Github** 
+- Free support via **Github**
 - Paid Support **24/7 LIVE Support** via [Discord](https://discord.gg/fZC6hup)
 
 > Links
 
-- [Django Dashboard DattaAble](https://appseed.us/admin-dashboards/django-dashboard-dattaable) - Product page
+- [Django Dashboard DattaAble](/#) - Product page
 - [Django Dashboard DattaAble](https://django-dashboard-dattaable.appseed.us/login/) - LIVE Demo
 - More [Django Admin Dashboards](https://appseed.us/admin-dashboards/django) - index hosted by **AppSeed**
 - [Free Admin Dashboards](https://appseed.us/admin-dashboards/open-source) - index hosted by **AppSeed**
@@ -25,9 +25,9 @@
 
 PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Support** (via [Discord](https://discord.gg/fZC6hup))
 
-| [Django DattaAble DattaAble PRO](https://appseed.us/admin-dashboards/django-dashboard-dattaable-pro) | [Django Dashboard Black PRO](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [Django Dashboard Argon PRO](https://appseed.us/admin-dashboards/django-dashboard-argon-pro) |
-| --- | --- | --- |
-| [![Django DattaAble PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-dattaable-pro/master/media/django-dashboard-dattaable-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-dattaable-pro) | [![Django Dashboard Black PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-black-pro/master/media/django-dashboard-black-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [![Django Dashboard Argon PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-argon-pro/master/media/django-dashboard-argon-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-argon-pro)
+| [Django DattaAble DattaAble PRO](/#-pro)                                                                                                                                 | [Django Dashboard Black PRO](https://appseed.us/admin-dashboards/django-dashboard-black-pro)                                                                                                                                   | [Django Dashboard Argon PRO](https://appseed.us/admin-dashboards/django-dashboard-argon-pro)                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [![Django DattaAble PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-dattaable-pro/master/media/django-dashboard-dattaable-pro-screen.png)](/#-pro) | [![Django Dashboard Black PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-black-pro/master/media/django-dashboard-black-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [![Django Dashboard Argon PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-argon-pro/master/media/django-dashboard-argon-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-argon-pro) |
 
 <br />
 <br />
@@ -62,7 +62,7 @@ $
 $ # Start the application (development mode)
 $ python manage.py runserver # default port 8000
 $
-$ # Start the app - custom port 
+$ # Start the app - custom port
 $ # python manage.py runserver 0.0.0.0:<your_port>
 $
 $ # Access the web app in browser: http://127.0.0.1:8000/
@@ -77,6 +77,7 @@ $ # Access the web app in browser: http://127.0.0.1:8000/
 The app is provided with a basic configuration to be executed in [Docker](https://www.docker.com/), [Gunicorn](https://gunicorn.org/), and [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/).
 
 ### [Docker](https://www.docker.com/) execution
+
 ---
 
 The application can be easily executed in a docker container. The steps:
@@ -99,6 +100,7 @@ Visit `http://localhost:5005` in your browser. The app should be up & running.
 <br />
 
 ### [Gunicorn](https://gunicorn.org/)
+
 ---
 
 Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX.
@@ -108,6 +110,7 @@ Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX.
 ```bash
 $ pip install gunicorn
 ```
+
 > Start the app using gunicorn binary
 
 ```bash
@@ -117,10 +120,10 @@ Serving on http://localhost:8001
 
 Visit `http://localhost:8001` in your browser. The app should be up & running.
 
-
 <br />
 
 ### [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/)
+
 ---
 
 Waitress (Gunicorn equivalent for Windows) is meant to be a production-quality pure-Python WSGI server with very acceptable performance. It has no dependencies except ones that live in the Python standard library.
@@ -130,6 +133,7 @@ Waitress (Gunicorn equivalent for Windows) is meant to be a production-quality p
 ```bash
 $ pip install waitress
 ```
+
 > Start the app using [waitress-serve](https://docs.pylonsproject.org/projects/waitress/en/stable/runner.html)
 
 ```bash
@@ -156,9 +160,9 @@ Start fast your next Django project by using functional admin dashboards enhance
 
 <br />
 
-### [What is a dashboard](https://en.wikipedia.org/wiki/Dashboard_(business))
+### [What is a dashboard](<https://en.wikipedia.org/wiki/Dashboard_(business)>)
 
-A dashboard is a set of pages that are easy to read and offer information to the user in real-time regarding his business. A dashboard usually consists of graphical representations of the current status and trends within an organization. Having a well-designed dashboard will give you the possibility to act and make informed decisions based on the data that your business provides - *definition provided by [Creative-Tim - Free Dashboard Templates](https://www.creative-tim.com/blog/web-design/free-dashboard-templates/?ref=appseed)*.
+A dashboard is a set of pages that are easy to read and offer information to the user in real-time regarding his business. A dashboard usually consists of graphical representations of the current status and trends within an organization. Having a well-designed dashboard will give you the possibility to act and make informed decisions based on the data that your business provides - _definition provided by [Creative-Tim - Free Dashboard Templates](https://www.creative-tim.com/blog/web-design/free-dashboard-templates/?ref=appseed)_.
 
 <br />
 
@@ -169,4 +173,5 @@ Datta Able Bootstrap Lite is the most styled Bootstrap 4 Lite Admin Template, ar
 <br />
 
 ---
-**[Django Dashboard DattaAble](https://appseed.us/admin-dashboards/django-dashboard-dattaable)** - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
+
+**[Django Dashboard DattaAble](/#)** - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).

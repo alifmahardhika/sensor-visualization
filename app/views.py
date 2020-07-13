@@ -7,7 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django import template
 import json
 import mariadb
@@ -32,15 +32,64 @@ def query_to_Json(query_result):
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
-    # All resource paths end in .html.
-    # Pick out the html file name from the url. And load that template.
+    try:
+        conn = mariadb.connect(
+            host="localhost",
+            user="alif",
+            password="alif",
+            database="iotdb"
+        )
+        print("\n=========================Database connection to " +
+              "localhost" + " SUCCESS===================================\n")
+    except mariadb.Error as e:
+        print(e)
+    cur = conn.cursor()
+    try:
+        insert_query = 'select * from temperature_records'
+        cur.execute(insert_query)
+        sqlresult = cur.fetchall()
 
-    # a = {
-    #     "ID": 1,
-    #     "Name": "John Smith",
-    #     "IDNumber": "7606015012088"
-    # }
-    # print(json.dumps(a))
+    except Exception as e:
+        print(e)
+
+    cur.close()
+    conn.close()
+    try:
+        load_template = request.path.split('/')[-1]
+
+        # SPECIAL PAGE CASES
+        if(load_template == "temperature-table.html"):
+            return(table_render(request, sqlresult))
+        if(load_template == "temperature-chart.html"):
+            return render(request, "temperature-chart.html")
+
+        html_template = loader.get_template(load_template)
+        return HttpResponse(html_template.render(context, request))
+
+    except template.TemplateDoesNotExist:
+
+        html_template = loader.get_template('error-404.html')
+        return HttpResponse(html_template.render(context, request))
+
+    except:
+
+        html_template = loader.get_template('error-500.html')
+        return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def table_render(request, jsonData):
+
+    objlist = []
+    for a in jsonData:
+        objlist.append(json.loads(query_to_Json(a)))
+    return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
+
+
+@login_required(login_url="/login/")
+def temperature_json(request):
+    labels = []
+    data = []
 
     try:
         conn = mariadb.connect(
@@ -58,60 +107,21 @@ def pages(request):
         insert_query = 'select * from temperature_records'
         cur.execute(insert_query)
         sqlresult = cur.fetchall()
-        # print("==================SQLRESULT====================:")
-        # print(sqlresult[0])
 
     except Exception as e:
         print(e)
 
     cur.close()
     conn.close()
-    try:
-        load_template = request.path.split('/')[-1]
-        if(load_template == "temperature-table.html"):
-            return(table_render(request, sqlresult))
-        print("==================not here===================:")
 
-        html_template = loader.get_template(load_template)
-        return HttpResponse(html_template.render(context, request))
+    for a in sqlresult:
+        labels.append(json.loads(query_to_Json(a))['time_stamp'])
+        data.append(json.loads(query_to_Json(a))['temperature'])
 
-    except template.TemplateDoesNotExist:
+    for v in labels:
+        print(v)
 
-        html_template = loader.get_template('error-404.html')
-        return HttpResponse(html_template.render(context, request))
-
-    except:
-
-        html_template = loader.get_template('error-500.html')
-        return HttpResponse(html_template.render(context, request))
-
-
-def table_render(request, jsonData):
-
-    objlist = []
-    for a in jsonData:
-        objlist.append(json.loads(query_to_Json(a)))
-    for x in objlist:
-        print(x)
-    # label = []
-    # data = []
-    # for key in jsonData:
-    #     label.append(key)
-    # for value in jsonData:
-    #     data.append(value)
-    # print('============\n')
-    # lbl = ''
-    # for i in label:
-    #     lbl = lbl + ', ' + i
-    # dat = ''
-    # for x in data:
-    #     dat = dat + ', ' + x
-    # print(lbl)
-    # print(dat)
-    return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
-    # html_template = loader.get_template(load_template)
-    # myvar = {'myvar': a}
-    # return HttpResponse(html_template.render(context, request), myvar)
-    # print("==================here===================:")
-
-    # return HttpResponse({'a': a}, 'templates/ui-tables.html', content_type="application/html")
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })

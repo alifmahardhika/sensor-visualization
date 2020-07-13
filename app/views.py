@@ -68,7 +68,7 @@ def pages(request):
     conn.close()
     try:
         load_template = request.path.split('/')[-1]
-        if(load_template == "ui-tables.html"):
+        if(load_template == "temperature-table.html"):
             return(table_render(request, sqlresult))
         print("==================not here===================:")
 
@@ -108,7 +108,7 @@ def table_render(request, jsonData):
     #     dat = dat + ', ' + x
     # print(lbl)
     # print(dat)
-    return TemplateResponse(request, 'ui-tables.html', {'data': objlist})
+    return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
     # html_template = loader.get_template(load_template)
     # myvar = {'myvar': a}
     # return HttpResponse(html_template.render(context, request), myvar)

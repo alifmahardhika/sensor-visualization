@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %} {% block title %} UI Tables {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <div class="main-body">
+      <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+          <!-- [ Hover-table ] start -->
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Body Temperature Records</h5>
+              </div>
+              <div class="card-block table-border-style">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Device MAC Address</th>
+                        <th>Time</th>
+                        <th>Temperature</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- INSERT TABLE HERE -->
+                      {% for d in data %}
+                      <tr>
+                        <th>{{ d.mac_address }}</th>
+                        <th>{{ d.time_stamp }}</th>
+                        <th>{{ d.temperature }}</th>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Hover-table ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

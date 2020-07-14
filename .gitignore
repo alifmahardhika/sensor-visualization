@@ -25,3 +25,4 @@ staticfiles/*
 !staticfiles/.gitkeep 
 
 dbconfig.txt
+LICENSE.md

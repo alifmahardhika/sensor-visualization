@@ -14,6 +14,14 @@ import mariadb
 from django.template.response import TemplateResponse
 
 
+# =========set up file dbconfig.txt dengan format host,user,pass,dbname ========
+DB_HOST = ''
+DB_USER = ''
+DB_PASS = ''
+DB_NAME = ''
+# =========================================
+
+
 @login_required(login_url="/login/")
 def index(request):
     return render(request, "index.html")
@@ -34,13 +42,13 @@ def pages(request):
     context = {}
     try:
         conn = mariadb.connect(
-            host="localhost",
-            user="alif",
-            password="alif",
-            database="iotdb"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASS,
+            database=DB_NAME
         )
         print("\n=========================Database connection to " +
-              "localhost" + " SUCCESS===================================\n")
+              DB_HOST + " SUCCESS===================================\n")
     except mariadb.Error as e:
         print(e)
     cur = conn.cursor()
@@ -93,13 +101,13 @@ def temperature_json(request):
 
     try:
         conn = mariadb.connect(
-            host="localhost",
-            user="alif",
-            password="alif",
-            database="iotdb"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASS,
+            database=DB_NAME
         )
         print("\n=========================Database connection to " +
-              "localhost" + " SUCCESS===================================\n")
+              DB_HOST + " SUCCESS===================================\n")
     except mariadb.Error as e:
         print(e)
     cur = conn.cursor()
@@ -125,3 +133,24 @@ def temperature_json(request):
         'labels': labels,
         'data': data,
     })
+
+
+'''
+==================================================
+get db credentials dari file db config  
+==================================================
+'''
+
+
+def getDBConfig():
+    f = open("dbconfig.txt", "r")
+    config = f.readline().split(',')
+    global DB_HOST
+    global DB_USER
+    global DB_PASS
+    global DB_NAME
+    DB_HOST = config[0]
+    DB_USER = config[1]
+    DB_PASS = config[2]
+    DB_NAME = config[3]
+    f.close()

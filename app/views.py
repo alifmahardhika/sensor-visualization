@@ -115,7 +115,7 @@ def temperature_json(request):
     conn.close()
 
     for a in sqlresult:
-        labels.append(json.loads(query_to_Json(a))['time_stamp'])
+        labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
         data.append(json.loads(query_to_Json(a))['temperature'])
 
     for v in labels:

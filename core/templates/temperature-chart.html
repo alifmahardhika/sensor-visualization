@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %} {% block content %}
 
-<div id="container" style="width: 75%;">
+<div id="container" style="width: 50%;">
   <canvas id="temperature-chart" data-url="{% url 'temp-json' %}"></canvas>
 </div>
 
@@ -15,14 +15,18 @@
         var ctx = $temperatureChart[0].getContext("2d");
 
         new Chart(ctx, {
-          type: "bar",
+          type: "line",
           data: {
             labels: data.labels,
             datasets: [
               {
                 label: "temperature",
-                backgroundColor: "blue",
+                backgroundColor: "transparent",
+                borderColor: "#26d1bc",
                 data: data.data,
+                pointBorderColor: "grey",
+                pointBorderWidth: 1,
+                pointHitRadius: 1,
               },
             ],
           },
@@ -33,8 +37,19 @@
             },
             title: {
               display: true,
-              text: "temperature Bar Chart",
+              text: "Temperature Bar Chart",
             },
+            scales: {
+              yAxes: [{
+                display: true,
+                ticks: {
+                  suggestedMin: 25,    // minimum will be 0, unless there is a lower value.
+                  stepSize: 1,
+                  // OR //
+                  // beginAtZero: true   // minimum value will be 0.
+                }
+              }]
+            }
           },
         });
       },

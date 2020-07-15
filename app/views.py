@@ -37,11 +37,9 @@ def query_to_Json(query_result):
     return jsoned
 
 
-@login_required(login_url="/login/")
-def pages(request):
-    context = {}
+def set_DB_config():
+    getDBConfig()
     try:
-        getDBConfig()
         conn = mariadb.connect(
             host=DB_HOST,
             user=DB_USER,
@@ -50,8 +48,18 @@ def pages(request):
         )
         print("\n=========================Database connection to " +
               DB_HOST + " SUCCESS===================================\n")
+        return conn
     except mariadb.Error as e:
+        print("\n=========================Database connection to " +
+              DB_HOST + " FAILEDS===================================\n")
         print(e)
+        return None
+
+
+@login_required(login_url="/login/")
+def pages(request):
+    context = {}
+    conn = set_DB_config()
     cur = conn.cursor()
     try:
         insert_query = 'select * from temperature_records'
@@ -99,18 +107,7 @@ def table_render(request, jsonData):
 def temperature_json(request):
     labels = []
     data = []
-    getDBConfig()
-    try:
-        conn = mariadb.connect(
-            host=DB_HOST,
-            user=DB_USER,
-            password=DB_PASS,
-            database=DB_NAME
-        )
-        print("\n=========================Database connection to " +
-              DB_HOST + " SUCCESS===================================\n")
-    except mariadb.Error as e:
-        print(e)
+    conn = set_DB_config()
     cur = conn.cursor()
     try:
         insert_query = 'select * from temperature_records'

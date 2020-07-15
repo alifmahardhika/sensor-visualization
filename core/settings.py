@@ -21,7 +21,7 @@ DEBUG = True  # config('DEBUG', default=False)
 
 # load production server from .env
 ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 config('SERVER', default='127.0.0.1'), "http://app.itsmyhealth.id"]
+                 config('SERVER', default='127.0.0.1'), "app.itsmyhealth.id"]
 
 # Application definition
 

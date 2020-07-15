@@ -41,6 +41,7 @@ def query_to_Json(query_result):
 def pages(request):
     context = {}
     try:
+        getDBConfig()
         conn = mariadb.connect(
             host=DB_HOST,
             user=DB_USER,
@@ -98,7 +99,7 @@ def table_render(request, jsonData):
 def temperature_json(request):
     labels = []
     data = []
-
+    getDBConfig()
     try:
         conn = mariadb.connect(
             host=DB_HOST,

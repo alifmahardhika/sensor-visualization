@@ -1,7 +1,15 @@
 {% extends "layouts/base.html" %} {% block content %}
 
 <div id="container" style="width: 50%;">
-  <canvas id="temperature-chart" data-url="{% url 'temp-json' %}"></canvas>
+  <canvas id="temperature-chart" data-url="{% url 'temp-json' %}?date-filter={{date_filter}}"></canvas>
+</div>
+<!-- {{ request.get_full_path }} -->
+<div class="mt-3">
+  <form action="/temperature-chart.html" class="mb-3">
+    <label for="date-filter">Filter by date: </label>
+    <input type="date" id="date-filter" name="date-filter">
+    <input type="submit">
+  </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

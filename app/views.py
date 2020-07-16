@@ -82,7 +82,14 @@ def pages(request):
         if(load_template == "temperature-table.html"):
             return(table_render(request, sqlresult))
         if(load_template == "temperature-chart.html"):
-            return render(request, "temperature-chart.html")
+            date_filter = ''
+            objlist = []
+            try:
+                date_filter = request.GET["date-filter"]
+                print("DATE: " + date_filter)
+            except Exception as e:
+                print(e)
+            return render(request, "temperature-chart.html", {'date_filter': date_filter})
 
         html_template = loader.get_template(load_template)
         return HttpResponse(html_template.render(context, request))
@@ -138,6 +145,7 @@ def temperature_json(request):
     data = []
     conn = set_DB_config()
     cur = conn.cursor()
+
     try:
         insert_query = 'select * from temperature_records'
         cur.execute(insert_query)
@@ -149,12 +157,40 @@ def temperature_json(request):
     cur.close()
     conn.close()
 
-    for a in sqlresult:
-        labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
-        data.append(json.loads(query_to_Json(a))['temperature'])
+    try:
+        date_filter = request.GET["date-filter"]
 
-    for v in labels:
-        print(v)
+        if (date_filter != ''):
+            a = date_filter.split('-')
+            a[1] = calendar.month_abbr[int(a[1])]
+            date_filter = a[2] + '-' + a[1] + '-' + a[0]
+            # VALIDATE DATE FILTER INPUT
+            try:
+                d = datetime.strptime(date_filter, '%d-%b-%Y')
+            except Exception as e:
+                # INVALID INPUT nanti return error page
+                print(e)
+            for a in sqlresult:
+                datef = json.loads(query_to_Json(a))['time_stamp'][:12]
+                if (datef[0:11] == date_filter):
+                    labels.append(json.loads(query_to_Json(a))
+                                  ['time_stamp'][:17])
+                    data.append(json.loads(query_to_Json(a))['temperature'])
+        else:
+            for a in sqlresult:
+                labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
+                data.append(json.loads(query_to_Json(a))['temperature'])
+
+    except Exception as e:
+        print(e)
+        return JsonResponse(data={
+        })
+
+    for a in sqlresult:
+        datef = json.loads(query_to_Json(a))['time_stamp'][:12]
+        if (datef[0:11] == date_filter):
+            labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
+            data.append(json.loads(query_to_Json(a))['temperature'])
 
     return JsonResponse(data={
         'labels': labels,

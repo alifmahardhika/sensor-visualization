@@ -12,7 +12,8 @@ from django import template
 import json
 import mariadb
 from django.template.response import TemplateResponse
-
+import calendar
+from datetime import datetime
 
 # =========set up file dbconfig.txt dengan format host,user,pass,dbname ========
 DB_HOST = ''
@@ -99,14 +100,39 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def table_render(request, jsonData):
-
+    date_filter = ''
     objlist = []
+
+    try:
+        date_filter = request.GET["date-filter"]
+        if (date_filter != ''):
+            a = date_filter.split('-')
+            a[1] = calendar.month_abbr[int(a[1])]
+            date_filter = a[2] + '-' + a[1] + '-' + a[0]
+        # VALIDATE DATE FILTER INPUT
+        try:
+            d = datetime.strptime(date_filter, '%d-%b-%Y')
+        except Exception as e:
+            # INVALID INPUT nanti return error page
+            print(e)
+
+        if(request.GET["date-filter"] != ''):
+            for a in jsonData:
+                datedata = json.loads(query_to_Json(a))[
+                    'time_stamp'].split(' ')
+                if(datedata[0] == date_filter):
+                    print(''.join(datedata) + '\n' + date_filter)
+                    objlist.append(json.loads(query_to_Json(a)))
+        return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
+    except Exception as e:
+        print(e)
+
     for a in jsonData:
         objlist.append(json.loads(query_to_Json(a)))
     return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
 
 
-@login_required(login_url="/login/")
+@ login_required(login_url="/login/")
 def temperature_json(request):
     labels = []
     data = []
@@ -138,7 +164,7 @@ def temperature_json(request):
 
 '''
 ==================================================
-get db credentials dari file db config  
+get db credentials dari file db config
 ==================================================
 '''
 

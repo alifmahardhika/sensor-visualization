@@ -15,11 +15,20 @@
               <div class="card-header">
                 <h5>Body Temperature Records</h5>
               </div>
+
+
               <div class="card-block table-border-style">
                 <div class="table-responsive">
+                  <form action="/temperature-table.html" class="mb-3">
+                    <label for="date-filter">Filter by date:</label>
+                    <input type="date" id="date-filter" name="date-filter">
+                    <input type="submit">
+                  </form>
+
                   <table class="table table-hover">
                     <thead>
                       <tr>
+                        <th>No</th>
                         <th>Device MAC Address</th>
                         <th>Time</th>
                         <th>Temperature</th>
@@ -29,6 +38,7 @@
                       <!-- INSERT TABLE HERE -->
                       {% for d in data %}
                       <tr>
+                        <th>{{ forloop.counter }}</th>
                         <th>{{ d.mac_address }}</th>
                         <th>{{ d.time_stamp }}</th>
                         <th>{{ d.temperature }}</th>

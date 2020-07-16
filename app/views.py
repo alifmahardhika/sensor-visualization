@@ -60,6 +60,9 @@ def set_DB_config():
 def pages(request):
     context = {}
     conn = set_DB_config()
+    if conn == None:
+        html_template = loader.get_template('error-500.html')
+        return HttpResponse(html_template.render(context, request))
     cur = conn.cursor()
     try:
         insert_query = 'select * from temperature_records'

@@ -1,0 +1,158 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page Blank {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Sample Page</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:">Sample Page</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- [ Main Content ] start -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 style="font-weight:bolder">Measurements</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1>66</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 style="font-weight:bolder">Average Temperature</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1>66</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 style="font-weight:bolder">Minimum Temperature</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1>66</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 style="font-weight:bolder">Maximum Temperature</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h1>66</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div id="container" style="width: 60%;">
+                    <canvas id="temperature-chart"
+                        data-url="{% url 'temp-json' %}?date-filter={{date_filter}}"></canvas>
+                </div>
+                <!-- {{ request.get_full_path }} -->
+                <div class="mt-3">
+                    <form action="/temperature-chart.html" class="mb-3">
+                        <label for="date-filter">Filter by date: </label>
+                        <input type="date" id="date-filter" name="date-filter">
+                        <input type="submit">
+                    </form>
+                </div>
+
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+                <script>
+                    $(function () {
+                        var $temperatureChart = $("#temperature-chart");
+                        $.ajax({
+                            url: $temperatureChart.data("url"),
+                            success: function (data) {
+                                var ctx = $temperatureChart[0].getContext("2d");
+
+                                new Chart(ctx, {
+                                    type: "line",
+                                    data: {
+                                        labels: data.labels,
+                                        datasets: [
+                                            {
+                                                label: "temperature",
+                                                backgroundColor: "transparent",
+                                                borderColor: "#0056a6",
+                                                data: data.data,
+                                                pointBorderColor: "grey",
+                                                pointBorderWidth: 1,
+                                                pointHitRadius: 1,
+                                                cubicInterpolationMode: "linear",
+                                                lineTension: 0,
+                                            },
+                                        ],
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        legend: {
+                                            position: "top",
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: "Temperature Bar Chart",
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                display: true,
+                                                ticks: {
+                                                    suggestedMin: 30,    // minimum will be 0, unless there is a lower value.
+                                                    stepSize: 1,
+                                                    // OR //
+                                                    // beginAtZero: true   // minimum value will be 0.
+                                                }
+                                            }]
+                                        }
+                                    },
+                                });
+                            },
+                        });
+                    });
+                </script>
+
+                <!-- [ Main Content ] end -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

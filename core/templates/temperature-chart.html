@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %} {% block content %}
 
-<div id="container" style="width: 50%;">
+<br>
+<div id="container" style="width: 80%;">
   <canvas id="temperature-chart" data-url="{% url 'temp-json' %}?date-filter={{date_filter}}"></canvas>
 </div>
 <!-- {{ request.get_full_path }} -->
@@ -30,11 +31,13 @@
               {
                 label: "temperature",
                 backgroundColor: "transparent",
-                borderColor: "#26d1bc",
+                borderColor: "#0056a6",
                 data: data.data,
                 pointBorderColor: "grey",
                 pointBorderWidth: 1,
                 pointHitRadius: 1,
+                cubicInterpolationMode: "linear",
+                lineTension: 0,
               },
             ],
           },
@@ -51,7 +54,7 @@
               yAxes: [{
                 display: true,
                 ticks: {
-                  suggestedMin: 25,    // minimum will be 0, unless there is a lower value.
+                  suggestedMin: 30,    // minimum will be 0, unless there is a lower value.
                   stepSize: 1,
                   // OR //
                   // beginAtZero: true   // minimum value will be 0.

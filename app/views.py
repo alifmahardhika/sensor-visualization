@@ -131,7 +131,9 @@ def table_render(request, jsonData):
                     'time_stamp'].split(' ')
                 if(datedata[0] == date_filter):
                     objlist.append(queried)
-        print('here')
+        else:
+            for a in jsonData:
+                objlist.append(json.loads(query_to_Json(a)))
         paginator = Paginator(objlist, 10)
         print(paginator.num_pages)
         page = request.GET.get('page', 1)
@@ -148,7 +150,17 @@ def table_render(request, jsonData):
 
     for a in jsonData:
         objlist.append(json.loads(query_to_Json(a)))
-    return TemplateResponse(request, 'history.html', {'data': objlist, 'date': request.GET["date-filter"]})
+
+    paginator = Paginator(objlist, 10)
+    page = request.GET.get('page', 1)
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
+    return TemplateResponse(request, 'history.html', {'data': data})
 
 
 @ login_required(login_url="/login/")

@@ -157,6 +157,7 @@ def temperature_json(request):
     cur.close()
     conn.close()
 
+    data_id = '0'
     try:
         date_filter = request.GET["date-filter"]
 
@@ -178,6 +179,7 @@ def temperature_json(request):
                     labels.append(json.loads(query_to_Json(a))
                                   ['time_stamp'][:17])
                     data.append(json.loads(query_to_Json(a))['temperature'])
+            data_id = date_filter
         else:
             for a in sqlresult:
                 labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
@@ -192,6 +194,8 @@ def temperature_json(request):
     #     if (datef[0:11] == date_filter):
     #         labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
     #         data.append(json.loads(query_to_Json(a))['temperature'])
+    if (data_id == '0'):
+        data_id = 'All'
 
     return JsonResponse(data={
         'labels': labels,
@@ -199,7 +203,8 @@ def temperature_json(request):
         'min': min(data),
         'max': max(data),
         'avg': float("{:.2f}".format(sum(data)/len(data))),
-        'num': len(data)
+        'num': len(data),
+        'date_req': data_id
     })
 
 

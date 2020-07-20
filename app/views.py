@@ -170,6 +170,8 @@ def temperature_json(request):
             except Exception as e:
                 # INVALID INPUT nanti return error page
                 print(e)
+
+            # ===================================start querying=========================
             for a in sqlresult:
                 datef = json.loads(query_to_Json(a))['time_stamp'][:12]
                 if (datef[0:11] == date_filter):
@@ -180,21 +182,32 @@ def temperature_json(request):
             for a in sqlresult:
                 labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
                 data.append(json.loads(query_to_Json(a))['temperature'])
-
+        print("========AVERAGE===========")
+        print(sum(data)/len(data))
+        print("========MIN===========")
+        print(min(data))
+        print("========MAX===========")
+        print(max(data))
+        print("========no.Measurments===========")
+        print(len(data))
     except Exception as e:
         print(e)
         return JsonResponse(data={
         })
 
-    for a in sqlresult:
-        datef = json.loads(query_to_Json(a))['time_stamp'][:12]
-        if (datef[0:11] == date_filter):
-            labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
-            data.append(json.loads(query_to_Json(a))['temperature'])
+    # for a in sqlresult:
+    #     datef = json.loads(query_to_Json(a))['time_stamp'][:12]
+    #     if (datef[0:11] == date_filter):
+    #         labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
+    #         data.append(json.loads(query_to_Json(a))['temperature'])
 
     return JsonResponse(data={
         'labels': labels,
         'data': data,
+        'min': min(data),
+        'max': max(data),
+        'avg': float("{:.2f}".format(sum(data)/len(data))),
+        'num': len(data)
     })
 
 

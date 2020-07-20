@@ -111,13 +111,13 @@
                                 new Chart(ctx, {
                                     type: "line",
                                     data: {
-                                        labels: data.labels,
+                                        labels: data.time_stamp,
                                         datasets: [
                                             {
                                                 label: "Measurements",
                                                 backgroundColor: "transparent",
                                                 borderColor: "#0056a6",
-                                                data: data.data,
+                                                data: data.temperature,
                                                 pointBorderColor: "grey",
                                                 pointBorderWidth: 1,
                                                 pointHitRadius: 1,

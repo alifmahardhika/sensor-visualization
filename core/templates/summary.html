@@ -39,7 +39,7 @@
                                         <h4 style="font-weight:bolder">Measurements</h4>
                                     </div>
                                     <div class="card-body">
-                                        <h1>66</h1>
+                                        <h1 id='no_temp'>66</h1>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                         <h4 style="font-weight:bolder">Average Temperature</h4>
                                     </div>
                                     <div class="card-body">
-                                        <h1>66</h1>
+                                        <h1 id='avg_temp'>66</h1>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                         <h4 style="font-weight:bolder">Minimum Temperature</h4>
                                     </div>
                                     <div class="card-body">
-                                        <h1>66</h1>
+                                        <h1 id='min_temp'>66</h1>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                                         <h4 style="font-weight:bolder">Maximum Temperature</h4>
                                     </div>
                                     <div class="card-body">
-                                        <h1>66</h1>
+                                        <h1 id='max_temp'>66</h1>
                                     </div>
                                 </div>
                             </div>
@@ -99,6 +99,11 @@
                         $.ajax({
                             url: $temperatureChart.data("url"),
                             success: function (data) {
+                                document.getElementById("min_temp").innerHTML = data.min;
+                                document.getElementById("max_temp").innerHTML = data.max;
+                                document.getElementById("avg_temp").innerHTML = data.avg;
+                                document.getElementById("no_temp").innerHTML = data.num;
+
                                 var ctx = $temperatureChart[0].getContext("2d");
 
                                 new Chart(ctx, {

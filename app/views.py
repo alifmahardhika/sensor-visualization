@@ -182,14 +182,6 @@ def temperature_json(request):
             for a in sqlresult:
                 labels.append(json.loads(query_to_Json(a))['time_stamp'][:17])
                 data.append(json.loads(query_to_Json(a))['temperature'])
-        print("========AVERAGE===========")
-        print(sum(data)/len(data))
-        print("========MIN===========")
-        print(min(data))
-        print("========MAX===========")
-        print(max(data))
-        print("========no.Measurments===========")
-        print(len(data))
     except Exception as e:
         print(e)
         return JsonResponse(data={

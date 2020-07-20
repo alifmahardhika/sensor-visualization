@@ -13,7 +13,10 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Body Temperature Records</h5>
+                                <h5 id="table_title">Body Temperature Records</h5>
+                                <br> <br>
+                                <h6 id="table_page">Showing page</h6>
+
                             </div>
 
 
@@ -90,6 +93,25 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            success: function () {
+                if ('{{date}}' != '') {
+                    document.getElementById("table_title").innerHTML = 'Body Temperature Records ({{date}})';
+                }
+                else {
+                    document.getElementById("table_title").innerHTML = 'Body Temperature Records (All records)';
+                }
+                var pages = '{{ data }}';
+                var length_str = pages.length;
+                document.getElementById("table_page").innerHTML = 'Showing ' + pages.slice(4, length_str - 4);
+
+
+            }
+        });
+    });
+</script>
 
 {% endblock content %}
 

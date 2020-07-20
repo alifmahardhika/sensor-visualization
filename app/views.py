@@ -181,16 +181,15 @@ def temperature_json(request):
     cur.close()
     conn.close()
 
-    data_id = '0'
     try:
-        query_process(request, sqlresult, time_stamp, temperature, data_id)
+        data_id = query_process(
+            request, sqlresult, time_stamp, temperature)
     except Exception as e:
         print(e)
         return JsonResponse(data={
         })
 
-    if (data_id == '0'):
-        data_id = 'All'
+    print(data_id)
 
     return JsonResponse(data={
         'time_stamp': time_stamp,
@@ -203,7 +202,7 @@ def temperature_json(request):
     })
 
 
-def query_process(request, sqlresult, time_stamp, temperature, data_id):
+def query_process(request, sqlresult, time_stamp, temperature):
     date_filter = request.GET["date-filter"]
     if (date_filter != ''):
         a = date_filter.split('-')
@@ -224,10 +223,13 @@ def query_process(request, sqlresult, time_stamp, temperature, data_id):
                                   ['time_stamp'][:17])
                 temperature.append(json.loads(query_to_Json(a))['temperature'])
         data_id = date_filter
+        return data_id
+
     else:
         for a in sqlresult:
             time_stamp.append(json.loads(query_to_Json(a))['time_stamp'][:17])
             temperature.append(json.loads(query_to_Json(a))['temperature'])
+        return 'All'
 
 
 '''

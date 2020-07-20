@@ -78,13 +78,13 @@
                     </div>
                 </div>
                 <br>
-                <div id="container" style="width: 60%;">
+                <div id="container" style="width: 70%;">
                     <canvas id="temperature-chart"
                         data-url="{% url 'temp-json' %}?date-filter={{date_filter}}"></canvas>
                 </div>
                 <!-- {{ request.get_full_path }} -->
                 <div class="mt-3">
-                    <form action="/temperature-chart.html" class="mb-3">
+                    <form action="/summary.html" class="mb-3">
                         <label for="date-filter">Filter by date: </label>
                         <input type="date" id="date-filter" name="date-filter">
                         <input type="submit">
@@ -107,7 +107,7 @@
                                         labels: data.labels,
                                         datasets: [
                                             {
-                                                label: "temperature",
+                                                label: "Measurements",
                                                 backgroundColor: "transparent",
                                                 borderColor: "#0056a6",
                                                 data: data.data,
@@ -126,14 +126,14 @@
                                         },
                                         title: {
                                             display: true,
-                                            text: "Temperature Bar Chart",
+                                            text: "Measurements History",
                                         },
                                         scales: {
                                             yAxes: [{
                                                 display: true,
                                                 ticks: {
                                                     suggestedMin: 30,    // minimum will be 0, unless there is a lower value.
-                                                    stepSize: 1,
+                                                    stepSize: 0.5,
                                                     // OR //
                                                     // beginAtZero: true   // minimum value will be 0.
                                                 }

@@ -79,9 +79,9 @@ def pages(request):
         load_template = request.path.split('/')[-1]
 
         # SPECIAL PAGE CASES
-        if(load_template == "temperature-table.html"):
+        if(load_template == "history.html"):
             return(table_render(request, sqlresult))
-        if(load_template == "temperature-chart.html"):
+        if(load_template == "summary.html"):
             date_filter = ''
             objlist = []
             try:
@@ -89,7 +89,7 @@ def pages(request):
                 print("DATE: " + date_filter)
             except Exception as e:
                 print(e)
-            return render(request, "temperature-chart.html", {'date_filter': date_filter})
+            return render(request, "summary.html", {'date_filter': date_filter})
 
         html_template = loader.get_template(load_template)
         return HttpResponse(html_template.render(context, request))
@@ -130,13 +130,13 @@ def table_render(request, jsonData):
                 if(datedata[0] == date_filter):
                     print(''.join(datedata) + '\n' + date_filter)
                     objlist.append(json.loads(query_to_Json(a)))
-        return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
+        return TemplateResponse(request, 'history.html', {'data': objlist})
     except Exception as e:
         print(e)
 
     for a in jsonData:
         objlist.append(json.loads(query_to_Json(a)))
-    return TemplateResponse(request, 'temperature-table.html', {'data': objlist})
+    return TemplateResponse(request, 'history.html', {'data': objlist})
 
 
 @ login_required(login_url="/login/")

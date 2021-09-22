@@ -1,6 +1,6 @@
 asgiref
 autopep8
-Django==3.0.8
+Django==3.1.13
 pycodestyle
 pytz
 sqlparse
